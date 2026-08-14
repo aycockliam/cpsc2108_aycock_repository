@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "4613c55d87eee2b7",
+        "id": "45e845932e0e788f",
         "type": "tabs",
         "children": [
           {
-            "id": "8ddf4fd06f54782c",
+            "id": "2b9b83bc83782893",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "cpsc2108_aycock_repository/readme.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "readme"
+              "title": "New tab"
             }
           }
         ]
@@ -197,8 +193,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8ddf4fd06f54782c",
+  "active": "2b9b83bc83782893",
   "lastOpenFiles": [
+    "cpsc2108_aycock_repository/readme.md",
     "readme.md",
     "README.md",
     "Token.md",
