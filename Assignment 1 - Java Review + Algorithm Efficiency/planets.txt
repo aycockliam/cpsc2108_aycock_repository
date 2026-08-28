@@ -1,8 +1,0 @@
-Mercury 0.39 88
-Venus 0.72 60195
-Earth 1.00 365
-Mars 1.52 780
-Jupiter 5.20 4332
-Saturn 9.50 10756
-Uranus 19.20 30689
-Neptune 30.00 60195
