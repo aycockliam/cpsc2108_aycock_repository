@@ -73,6 +73,7 @@ public class Dice{
                 }
             }
 
+            // Print out the Array.
             System.out.println("This round rolled the following numbers above " + myDice.getMinimumStreak() + ": " + printArray(myDice.streakCount, myDice.streakCount.length));
             myDice.streakCount = new int[0]; // reset the array for further loops.
         }
@@ -91,7 +92,7 @@ public class Dice{
     public void setMinimumStreak(int num){minimumStreak = num;}
  
     // Add a number to the streak array.
-    public int[] addStreak(int[] array, int number){
+    public int[] addStreak(int[] array, int number){ 
         int[] newArray = new int[array.length + 1]; // Make a new array with a length one greater than the original.
         for (int i = 0; i < array.length; i++){ // Iterate through the new array adding values from the last one.
             newArray[i] = array[i];
