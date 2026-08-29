@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Dice{
     public int numFaces;      // Specify the number of faces a dice has.
@@ -15,39 +15,43 @@ public class Dice{
     }
     public static void main(String[] args) {
         System.out.println("Welcome to my dice roller!"); // Welcome message.
-        boolean loopCheck = true;
-        boolean check = true;
         Scanner myScanner = new Scanner(System.in); // Instantiate a scanner object.
         Dice myDice = new Dice(); // Instantiate a Dice object.
         int numRolls;
         Random randomInt = new Random();
         int randomNumber;
         String thresholdCheck;
-        int[] rolls; // All rolls done.
 
-        while(check == true){ // Loop while the loop variable is true.
-            System.out.print("How many rounds would you like to roll: ");
-            int numRounds = myScanner.nextInt();
+        // Ask how many rounds to play.
+        System.out.print("How many rounds would you like to roll: ");
+        int numRounds = myDice.returnInt(myScanner);
 
+        for (int i = 0; i < numRounds; i++){ // Loop while the loop for the number of rounds.
+            // Ask for minimum die value.
             System.out.print("What is the minimum die value: ");
-            myDice.setMinimumFace(myScanner.nextInt());
+            myDice.setMinimumFace(myDice.returnInt(myScanner));
 
+            // Ask for how many faces the die should have.
             System.out.print("How many faces would you like: ");
-            myDice.setNumFaces(myScanner.nextInt() + myDice.minimumFace);
-        
+            myDice.setNumFaces(myDice.returnInt(myScanner) + myDice.minimumFace);
+
+            // How many times should the die be rolled
             System.out.print("How many times would you like to roll the die: ");
             numRolls = myScanner.nextInt();
-            rolls = new int[numRolls];
-        
+
+            myScanner.nextLine(); // Clear out line in.
+
+            // Check if the user has a minimum number. Default to the lowest die value otherwise.
             System.out.print("Is there a threshold you only want to count for (y/n): ");
             thresholdCheck = myScanner.nextLine();
 
-           if (thresholdCheck == "y"){
-                check = true;
+            // If the user says yes, prompt. If the number given is too big, repeat until a valid number is given.
+            if (thresholdCheck.equals("y")){
+                boolean check = true;
                 while (check == true){
                     System.out.print("What is the number: ");
                     myDice.setMinimumStreak(myScanner.nextInt());
-                        if (myDice.getMinimumStreak() > (myDice.getMinimumFace() + myDice.getNumFaces())){
+                        if (myDice.minimumStreak > (myDice.minimumFace + myDice.numFaces)){
                             System.out.println("Number too big! Try again!");
                         }
                         else{
@@ -55,25 +59,35 @@ public class Dice{
                         }
                 }
             }
+            // Set to the minimum face value if rejected.
             else {
                 myDice.setMinimumStreak(myDice.minimumFace);
             }
-            for (int i = 0; i < numRolls; i++ ){
-                randomNumber = randomInt.nextInt(myDice.minimumFace + 1, (myDice.minimumFace + myDice.numFaces) + 1); // Generate a random number that the dice can roll.
-                if (randomNumber >= myDice.getMinimumStreak()){ // Check if the number is greater than the specified threshold.
-                    myDice.addStreak(rolls, randomNumber); // Send to addStreak method.
+            // Roll the die numRolls times.
+            for (int j = 0; j < numRolls; j++ ){
+                // For each roll, generate a random number within the bounds of the lowest die number and the highest.
+                randomNumber = randomInt.nextInt(myDice.minimumFace, (myDice.minimumFace + myDice.numFaces));
+                // If the number is greater than the threshold value, add it to the array.
+                if (randomNumber >= myDice.getMinimumStreak()){
+                    myDice.streakCount = myDice.addStreak(myDice.streakCount, randomNumber);
                 }
             }
+
+            System.out.println("This roll had the following numbers above " + myDice.getMinimumStreak() + ": " + printArray(myDice.streakCount, myDice.streakCount.length));
         }
+        myScanner.close();
     }
-    // Getter methods.
-    public int getNumFaces(){return numFaces;}           // Get the value in numFaces
-    public int getMinimumFace(){return minimumFace;}     // Get the value in minimumFace.
-    public int getMinimumStreak(){return minimumStreak;} // Get the value in minimumStreak.
-    // Setter methods.
-    public void setNumFaces(int num){numFaces = num;}           // Get the value in numFaces
-    public void setMinimumFace(int num){minimumFace = num;}     // Get the value in minimumFace.
-    public void setMinimumStreak(int num){minimumStreak = num;} // Get the value in minimumStreak.
+
+    // Getter methods
+    public int getNumFaces(){return numFaces;}
+    public int getMinimumFace(){return minimumFace;}
+    public int getMinimumStreak(){return minimumStreak;}
+  
+    // Setter methods
+    public void setNumFaces(int num){numFaces = num;}
+    public void setMinimumFace(int num){minimumFace = num;}
+    public void setMinimumStreak(int num){minimumStreak = num;}
+ 
     // Add a number to the streak array.
     public int[] addStreak(int[] array, int number){
         int[] newArray = new int[array.length + 1]; // Make a new array with a length one greater than the original.
@@ -82,5 +96,28 @@ public class Dice{
         }
         newArray[newArray.length - 1] = number; // Add the new value.
         return newArray;
+    }
+
+    public static String printArray(int[] object, int length){
+        String arrayList = "" + object[0];
+        for (int i = 1; i < length; i++)
+            arrayList = arrayList + ", " + object[i];
+        return arrayList;
+    }
+
+    public int returnInt(Scanner scannerObject){
+        int integer = 0;
+        boolean validInput = false;
+        while (validInput == false){
+        try{
+            integer = scannerObject.nextInt();
+            validInput = true;
+        }
+        catch (Exception e){
+            System.out.print("Please type an integer: ");
+            scannerObject.next(); // Clear invalid input.
+        }
+        }
+        return integer;
     }
 }
