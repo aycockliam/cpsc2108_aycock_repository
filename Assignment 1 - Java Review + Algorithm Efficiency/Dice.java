@@ -66,15 +66,17 @@ public class Dice{
             // Roll the die numRolls times.
             for (int j = 0; j < numRolls; j++ ){
                 // For each roll, generate a random number within the bounds of the lowest die number and the highest.
-                randomNumber = randomInt.nextInt(myDice.minimumFace, (myDice.minimumFace + myDice.numFaces));
+                randomNumber = randomInt.nextInt(myDice.minimumFace - 1, (myDice.numFaces));
                 // If the number is greater than the threshold value, add it to the array.
-                if (randomNumber >= myDice.getMinimumStreak()){
+                if (randomNumber > myDice.getMinimumStreak()){
                     myDice.streakCount = myDice.addStreak(myDice.streakCount, randomNumber);
                 }
             }
 
-            System.out.println("This roll had the following numbers above " + myDice.getMinimumStreak() + ": " + printArray(myDice.streakCount, myDice.streakCount.length));
+            System.out.println("This round rolled the following numbers above " + myDice.getMinimumStreak() + ": " + printArray(myDice.streakCount, myDice.streakCount.length));
+            myDice.streakCount = new int[0]; // reset the array for further loops.
         }
+        System.out.println("Goodbye!");
         myScanner.close();
     }
 
@@ -98,6 +100,7 @@ public class Dice{
         return newArray;
     }
 
+    // Method to print the array.
     public static String printArray(int[] object, int length){
         String arrayList = "" + object[0];
         for (int i = 1; i < length; i++)
@@ -105,6 +108,7 @@ public class Dice{
         return arrayList;
     }
 
+    // SUPER important method that checks for if the input was an integer or not.
     public int returnInt(Scanner scannerObject){
         int integer = 0;
         boolean validInput = false;
